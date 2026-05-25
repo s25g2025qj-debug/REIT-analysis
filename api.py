@@ -6,14 +6,13 @@ url = "https://fudosandb.jp/v1/reit/properties"
 
 params = {"area": "福岡市", "limit": 10000}
 
-# ※ご自身の有効なAPIキーに書き換えてください
 headers = {"X-API-Key": "fdb_7f0ec13..."}
 
 res = requests.get(url, headers=headers, params=params)
 data = res.json()
 
 results = []
-# 【追加】区ごとの物件数を数えるためのカウンターを準備
+# 区ごとの物件数を数えるためのカウンターを準備
 ward_counter = Counter()
 
 for item in data["data"]["properties"]:
@@ -26,7 +25,6 @@ for item in data["data"]["properties"]:
     results.append([reit_name, location, asset_type, cap_rate, occupancy])
 
     # 【追加】locationから「区」までを切り出してカウントする
-    # 例: "大阪市北区梅田..." -> "大阪市北区"
     ku_index = location.find("区")
     if ku_index != -1:
         ward = location[: ku_index + 1]
